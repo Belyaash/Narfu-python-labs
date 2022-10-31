@@ -79,6 +79,23 @@ class Ui_Form(object):
         self.difficulty_combo_box.setGeometry(QtCore.QRect(340, 100, 120, 30))
         self.difficulty_combo_box.addItems(["Easy", "Medium", "Hard"])
 
+
+        self.current_time_label = QtWidgets.QLabel(Form)
+        self.current_time_label.setGeometry(QtCore.QRect(340, 150, 120, 30))
+        self.current_time_label.setText("Current time")
+
+        self.current_game_time = QtWidgets.QLabel(Form)
+        self.current_game_time.setGeometry(QtCore.QRect(340, 170, 120, 30))
+        self.current_game_time.setText("00:00:00")
+
+        self.best_time_label = QtWidgets.QLabel(Form)
+        self.best_time_label.setGeometry(QtCore.QRect(340, 230, 120, 30))
+        self.best_time_label.setText("Best time")
+
+        self.best_game_time = QtWidgets.QLabel(Form)
+        self.best_game_time.setGeometry(QtCore.QRect(340, 250, 120, 30))
+        self.best_game_time.setText("00:00:00")
+
         font = QFont('Century', 14)
         self.cells = []
         positions = [(i, j) for i in range(9) for j in range(9)]

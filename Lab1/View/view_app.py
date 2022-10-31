@@ -10,6 +10,7 @@ class App(QApplication):
         super(App, self).__init__(sys_argv)
         self.model: ISudokuAppModel = SudokuAppModel()
         self.view = MainWindow()
+        self.view.setFixedSize(479, 320)
         self.view.set_model(self.model)
 
         self.view.show()
