@@ -70,14 +70,14 @@ class ViewModel(Ui_Form, QtWidgets.QMainWindow):
             button = self.cells[i]
             if self.__const_cells[i]:
                 style = """
-                           QPushButton { background-color: silver; }
+                           QPushButton {color: blue}
                            QPushButton:pressed { background-color: red; }
                         """
                 button.setText(str(self.__cells_value[i]))
             else:
                 style = """
                            QPushButton { background-color: white; }
-                           QPushButton:hover { background-color: gray; }
+                           QPushButton:hover { border: 2px solid blue; }
                         """
                 button.setText("")
             button.setStyleSheet(style)

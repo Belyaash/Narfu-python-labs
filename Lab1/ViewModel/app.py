@@ -10,6 +10,6 @@ class App(QApplication):
         super(App, self).__init__(sys_argv)
         self.model: ISudokuAppModel = SudokuAppModel()
         self.view = ViewModel()
-        self.view.setFixedSize(479, 320)
+        self.view.setFixedSize(700, 500)
         self.view.set_model(self.model)
         self.view.select_difficulty_dialog()
