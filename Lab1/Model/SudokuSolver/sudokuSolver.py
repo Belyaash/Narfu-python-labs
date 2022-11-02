@@ -72,8 +72,8 @@ class SudokuSolver(ISudokuSolver):
                     return
 
     def __is_safe(self, grid, row, col, num) -> bool:
-        if (SudokuSolver.__used_in_row(grid, row, num) is False) and (SudokuSolver.__used_in_column(grid, col, num) is False) and (
-                SudokuSolver.__used_in_box(grid, row - row % 3, col - col % 3, num) is False):
+        if (self.__used_in_row(grid, row, num) is False) and (self.__used_in_column(grid, col, num) is False) and (
+                self.__used_in_box(grid, row - row % 3, col - col % 3, num) is False):
             return True
         else:
             return False
