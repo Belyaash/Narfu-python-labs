@@ -1,5 +1,6 @@
 from PyQt5 import QtWidgets, QtCore
 
+from Lab1.View.SelectDifficultyUI import SelectDifficulty
 from Lab1.View.SudokuUI import Ui_Form
 from Lab1.View.SetDigitsUI import Digits
 from Lab1.Model.SudokuAppModel.ISudokuAppModel import ISudokuAppModel
@@ -37,6 +38,13 @@ class ViewModel(Ui_Form, QtWidgets.QMainWindow):
         self.__refresh_grid()
         self.__refresh_game_menu()
         self.__set_button_style_and_text()
+
+    def select_difficulty_dialog(self):
+        self.close()
+        select_diff = SelectDifficulty()
+        select_diff.exec()
+        self.difficulty_combo_box.setCurrentText(select_diff.difficulty_name)
+        self.show()
 
     def __refresh_game_menu(self):
         self.timer.stop()
@@ -125,18 +133,27 @@ class ViewModel(Ui_Form, QtWidgets.QMainWindow):
         Win dialog
         :return:
         """
-        win_dialog = QtWidgets.QErrorMessage(self)
-        win_dialog.showMessage("SudokuMVC is filled correctly/ Победа")
+        win_dialog = QtWidgets.QMessageBox()
+        win_dialog.setText("SudokuMVC is filled correctly/ Победа")
+        win_dialog.setWindowTitle("Win")
+        win_dialog.setIcon(QtWidgets.QMessageBox.Information)
+        win_dialog.setStandardButtons(QtWidgets.QMessageBox.Ok)
         self.timer.stop()
         self.__try_update_best_time()
+        win_dialog.exec_()
+
 
     def __fail_dialog(self):
         """
         Lose dialog
         :return:
         """
-        error_dialog = QtWidgets.QErrorMessage(self)
-        error_dialog.showMessage("SudokuMVC is filled in incorrectly / Решение неверно")
+        error_dialog = QtWidgets.QMessageBox()
+        error_dialog.setText("SudokuMVC is filled in incorrectly / Решение неверно")
+        error_dialog.setWindowTitle("Fail")
+        error_dialog.setIcon(QtWidgets.QMessageBox.Warning)
+        error_dialog.setStandardButtons(QtWidgets.QMessageBox.Ok)
+        error_dialog.exec_()
 
     def set_difficulty(self, s):
         if s == "Easy":
