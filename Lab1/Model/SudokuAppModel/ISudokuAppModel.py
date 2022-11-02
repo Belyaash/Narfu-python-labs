@@ -1,6 +1,6 @@
-from Model.SudokuGameGridFactory.ISudokuGameGridFactory import ISudokuGameGridFactory
-from Model.SudokuGridFactory.ISudokuGridFactory import ISudokuGridFactory
-from Model.cell import Cell
+from Lab1.Model.SudokuGameGridFactory.ISudokuGameGridFactory import ISudokuGameGridFactory
+from Lab1.Model.SudokuGridFactory.ISudokuGridFactory import ISudokuGridFactory
+from Lab1.Model.cell import Cell
 
 
 class ISudokuAppModel:

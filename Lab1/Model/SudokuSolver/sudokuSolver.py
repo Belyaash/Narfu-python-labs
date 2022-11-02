@@ -1,4 +1,4 @@
-from Model.SudokuSolver.ISudokuSolver import ISudokuSolver
+from Lab1.Model.SudokuSolver.ISudokuSolver import ISudokuSolver
 
 
 class SudokuSolver(ISudokuSolver):
@@ -71,29 +71,25 @@ class SudokuSolver(ISudokuSolver):
                     self.__col_of_unfilled_cell = col
                     return
 
-    @staticmethod
-    def __is_safe(grid, row, col, num) -> bool:
+    def __is_safe(self, grid, row, col, num) -> bool:
         if (SudokuSolver.__used_in_row(grid, row, num) is False) and (SudokuSolver.__used_in_column(grid, col, num) is False) and (
                 SudokuSolver.__used_in_box(grid, row - row % 3, col - col % 3, num) is False):
             return True
         else:
             return False
 
-    @staticmethod
-    def __used_in_row(grid, row, num) -> bool:
+    def __used_in_row(self, grid, row, num) -> bool:
         for i in range(9):
             if grid[row][i] == num:
                 return True
         return False
 
-    @staticmethod
-    def __used_in_column(grid, col, num) -> bool:
+    def __used_in_column(self, grid, col, num) -> bool:
         for i in range(9):
             if grid[i][col] == num:
                 return True
         return False
 
-    @staticmethod
     def __used_in_box(grid, row_start, col_start, num) -> bool:
         for i in range(3):
             for j in range(3):

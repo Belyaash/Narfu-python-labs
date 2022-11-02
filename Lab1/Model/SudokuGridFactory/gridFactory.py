@@ -1,8 +1,8 @@
 import random
 
-from Model.SudokuGridFactory.ISudokuGridFactory import ISudokuGridFactory
-from Model.SudokuSolver.ISudokuSolver import ISudokuSolver
-from Model.SudokuSolver.sudokuSolver import SudokuSolver
+from Lab1.Model.SudokuGridFactory.ISudokuGridFactory import ISudokuGridFactory
+from Lab1.Model.SudokuSolver.ISudokuSolver import ISudokuSolver
+from Lab1.Model.SudokuSolver.sudokuSolver import SudokuSolver
 
 
 class GridFactory(ISudokuGridFactory):

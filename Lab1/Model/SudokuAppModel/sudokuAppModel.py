@@ -1,9 +1,9 @@
-from Model.SudokuAppModel.ISudokuAppModel import ISudokuAppModel
-from Model.SudokuGameGridFactory.ISudokuGameGridFactory import ISudokuGameGridFactory
-from Model.SudokuGameGridFactory.sudokuGameGridFactory import SudokuGameGridFactory
-from Model.SudokuGridFactory.gridFactory import GridFactory
-from Model.cell import Cell
-from Model.SudokuGridFactory.ISudokuGridFactory import ISudokuGridFactory
+from Lab1.Model.SudokuAppModel.ISudokuAppModel import ISudokuAppModel
+from Lab1.Model.SudokuGameGridFactory.ISudokuGameGridFactory import ISudokuGameGridFactory
+from Lab1.Model.SudokuGameGridFactory.sudokuGameGridFactory import SudokuGameGridFactory
+from Lab1.Model.SudokuGridFactory.gridFactory import GridFactory
+from Lab1.Model.cell import Cell
+from Lab1.Model.SudokuGridFactory.ISudokuGridFactory import ISudokuGridFactory
 
 
 class SudokuAppModel(ISudokuAppModel):

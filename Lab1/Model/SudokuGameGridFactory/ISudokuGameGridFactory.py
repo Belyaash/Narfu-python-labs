@@ -1,4 +1,4 @@
-from Model.cell import Cell
+from Lab1.Model.cell import Cell
 
 
 class ISudokuGameGridFactory:

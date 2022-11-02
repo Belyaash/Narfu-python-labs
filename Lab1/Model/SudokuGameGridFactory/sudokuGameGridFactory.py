@@ -1,10 +1,10 @@
 import copy
 import random
 
-from Model.SudokuSolver.ISudokuSolver import ISudokuSolver
-from Model.SudokuGameGridFactory.ISudokuGameGridFactory import ISudokuGameGridFactory
-from Model.cell import Cell
-from Model.SudokuSolver.sudokuSolver import SudokuSolver
+from Lab1.Model.SudokuSolver.ISudokuSolver import ISudokuSolver
+from Lab1.Model.SudokuGameGridFactory.ISudokuGameGridFactory import ISudokuGameGridFactory
+from Lab1.Model.cell import Cell
+from Lab1.Model.SudokuSolver.sudokuSolver import SudokuSolver
 
 
 class SudokuGameGridFactory(ISudokuGameGridFactory):
