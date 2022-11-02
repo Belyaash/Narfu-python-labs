@@ -90,7 +90,7 @@ class SudokuSolver(ISudokuSolver):
                 return True
         return False
 
-    def __used_in_box(grid, row_start, col_start, num) -> bool:
+    def __used_in_box(self, grid, row_start, col_start, num) -> bool:
         for i in range(3):
             for j in range(3):
                 if grid[i + row_start][j + col_start] == num:
