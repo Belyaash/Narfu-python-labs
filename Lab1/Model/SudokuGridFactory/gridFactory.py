@@ -6,8 +6,8 @@ from Lab1.Model.SudokuSolver.sudokuSolver import SudokuSolver
 
 
 class GridFactory(ISudokuGridFactory):
-    __temp_grid: list[list[int]] = None
-    __nums_list: list[int] = None
+    __temp_grid: list[list[int]]
+    __nums_list: list[int]
 
     def create_new_grid(self) -> list[list[int]]:
         self.__create_clear_grid()

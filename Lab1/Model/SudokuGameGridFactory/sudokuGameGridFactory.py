@@ -8,11 +8,11 @@ from Lab1.Model.SudokuSolver.sudokuSolver import SudokuSolver
 
 
 class SudokuGameGridFactory(ISudokuGameGridFactory):
-    difficulty: int = None
-    game_grid: list[list[int]] = None
-    __solved_grid: list[list[int]] = None
-    __difficulty_of_game_grid: int = None
-    __order_of_deletion: list[int] = None
+    difficulty: int
+    game_grid: list[list[int]]
+    __solved_grid: list[list[int]]
+    __difficulty_of_game_grid: int
+    __order_of_deletion: list[int]
 
     def __init__(self, difficulty: int = 50) -> None:
         self.difficulty = difficulty

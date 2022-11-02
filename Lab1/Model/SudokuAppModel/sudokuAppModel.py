@@ -7,8 +7,8 @@ from Lab1.Model.SudokuGridFactory.ISudokuGridFactory import ISudokuGridFactory
 
 
 class SudokuAppModel(ISudokuAppModel):
-    solved_grid: list[list[int]] = None
-    game_grid: list[list[Cell]] = None
+    solved_grid: list[list[int]]
+    game_grid: list[list[Cell]]
     solved_grid_factory: ISudokuGridFactory = GridFactory()
     game_grid_factory: ISudokuGameGridFactory = SudokuGameGridFactory(30)
 

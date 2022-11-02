@@ -2,8 +2,8 @@ from Lab1.Model.cell import Cell
 
 
 class ISudokuGameGridFactory:
-    difficulty: int = None
-    game_grid: list[list[int]] = None
+    difficulty: int
+    game_grid: list[list[int]]
 
     def __init__(self, difficulty: int = 50) -> None:
         pass

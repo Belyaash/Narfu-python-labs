@@ -2,10 +2,10 @@ from Lab1.Model.SudokuSolver.ISudokuSolver import ISudokuSolver
 
 
 class SudokuSolver(ISudokuSolver):
-    __grid: list[list[int]] = None
+    __grid: list[list[int]]
     __solutions = 0
-    __row_of_unfilled_cell: int = None
-    __col_of_unfilled_cell: int = None
+    __row_of_unfilled_cell: int
+    __col_of_unfilled_cell: int
 
     def __init__(self, unsolved_grid: list[list[int]]) -> None:
         self.__grid = unsolved_grid
