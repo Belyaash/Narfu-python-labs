@@ -1,3 +1,5 @@
+import time
+
 from Lab1.Model.SudokuAppModel.ISudokuAppModel import ISudokuAppModel
 from Lab1.Model.SudokuGameGridFactory.ISudokuGameGridFactory import ISudokuGameGridFactory
 from Lab1.Model.SudokuGameGridFactory.sudokuGameGridFactory import SudokuGameGridFactory
@@ -16,8 +18,10 @@ class SudokuAppModel(ISudokuAppModel):
         self.new_game()
 
     def new_game(self) -> None:
+        st = time.time()
         self.solved_grid = self.solved_grid_factory.create_new_grid()
         self.game_grid = self.game_grid_factory.create_game_grid(self.solved_grid)
+        print(time.time() - st)
 
     def is_player_win(self) -> bool:
         for i in range(9):

@@ -1,3 +1,6 @@
+import numpy
+
+
 class ISudokuGridFactory:
-    def create_new_grid(self) -> list[list[int]]:
+    def create_new_grid(self) -> numpy.array:
         pass

@@ -1,16 +1,18 @@
+import numpy
+
 from Lab1.Model.SudokuSolver.ISudokuSolver import ISudokuSolver
 
 
 class SudokuSolver(ISudokuSolver):
-    __grid: list[list[int]]
+    __grid: numpy.array
     __solutions = 0
     __row_of_unfilled_cell: int
     __col_of_unfilled_cell: int
 
-    def __init__(self, unsolved_grid: list[list[int]]) -> None:
-        self.__grid = unsolved_grid
+    def __init__(self, solved_grid: numpy.array) -> None:
+        self.set_grid(solved_grid)
 
-    def set_grid(self, grid: list[list[int]]) -> None:
+    def set_grid(self, grid: numpy.array) -> None:
         self.__grid = grid
 
     def get_solved_grid(self):

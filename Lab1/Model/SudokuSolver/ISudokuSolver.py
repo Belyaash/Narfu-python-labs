@@ -1,5 +1,8 @@
+import numpy
+
+
 class ISudokuSolver(object):
-    def set_grid(self, grid: list[list[int]]) -> None:
+    def set_grid(self, grid: numpy.array) -> None:
         pass
 
     def get_solved_grid(self):
