@@ -24,7 +24,7 @@ class GridFactory(ISudokuGridFactory):
     def __create_nums_list(self):
         one_to_nine = [1, 2, 3, 4, 5, 6, 7, 8, 9]
         random.shuffle(one_to_nine)
-        self.__nums_list = numpy.array(one_to_nine)
+        self.__nums_list = numpy.array(one_to_nine, dtype=int)
 
     def __fill_all_diagonal_boxes(self):
         for i in range(3):

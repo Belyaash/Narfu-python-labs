@@ -7,7 +7,7 @@ from Lab1.Model.cell import Cell
 
 class ISudokuAppModel:
     solved_grid: numpy.array
-    game_grid: list[list[Cell]]
+    game_grid: numpy.array
     solved_grid_factory: ISudokuGridFactory
     game_grid_factory: ISudokuGameGridFactory
 
