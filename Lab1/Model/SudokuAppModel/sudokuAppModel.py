@@ -1,5 +1,7 @@
 import time
 
+import numpy
+
 from Lab1.Model.SudokuAppModel.ISudokuAppModel import ISudokuAppModel
 from Lab1.Model.SudokuGameGridFactory.ISudokuGameGridFactory import ISudokuGameGridFactory
 from Lab1.Model.SudokuGameGridFactory.sudokuGameGridFactory import SudokuGameGridFactory
@@ -9,8 +11,8 @@ from Lab1.Model.SudokuGridFactory.ISudokuGridFactory import ISudokuGridFactory
 
 
 class SudokuAppModel(ISudokuAppModel):
-    solved_grid: list[list[int]]
-    game_grid: list[list[Cell]]
+    solved_grid: numpy.array
+    game_grid: numpy.array
     solved_grid_factory: ISudokuGridFactory = GridFactory()
     game_grid_factory: ISudokuGameGridFactory = SudokuGameGridFactory(30)
 
@@ -50,4 +52,4 @@ class SudokuAppModel(ISudokuAppModel):
         return True
 
     def set_difficulty(self, difficulty: int) -> None:
-        self.game_grid_factory.difficulty = difficulty*10 + 30
+        self.game_grid_factory.difficulty = difficulty*8 + 30

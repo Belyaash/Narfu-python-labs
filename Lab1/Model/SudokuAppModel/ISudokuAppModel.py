@@ -1,10 +1,12 @@
+import numpy
+
 from Lab1.Model.SudokuGameGridFactory.ISudokuGameGridFactory import ISudokuGameGridFactory
 from Lab1.Model.SudokuGridFactory.ISudokuGridFactory import ISudokuGridFactory
 from Lab1.Model.cell import Cell
 
 
 class ISudokuAppModel:
-    solved_grid: list[list[int]]
+    solved_grid: numpy.array
     game_grid: list[list[Cell]]
     solved_grid_factory: ISudokuGridFactory
     game_grid_factory: ISudokuGameGridFactory

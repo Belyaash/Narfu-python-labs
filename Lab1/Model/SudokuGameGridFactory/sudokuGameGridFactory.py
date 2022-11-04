@@ -60,11 +60,9 @@ class SudokuGameGridFactory(ISudokuGameGridFactory):
         :param grid:
         :return: list[list[Cell]]
         """
-        new_grid = []
-        for i in grid:
-            line = []
-            for j in i:
-                line.append(Cell(j))
-            new_grid.append(line)
+        new_grid = numpy.zeros((9, 9), dtype=Cell)
+        for i in range(9):
+            for j in range(9):
+                new_grid[i][j] = Cell(grid[i][j])
 
         return new_grid
