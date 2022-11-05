@@ -44,6 +44,8 @@ class ViewModel(Ui_Form, QtWidgets.QMainWindow):
         select_diff = SelectDifficulty()
         select_diff.exec()
         self.difficulty_combo_box.setCurrentText(select_diff.difficulty_name)
+        if self.difficulty_combo_box.currentText() == "Easy":
+            self.new_game()
         self.show()
 
     def __refresh_game_menu(self):

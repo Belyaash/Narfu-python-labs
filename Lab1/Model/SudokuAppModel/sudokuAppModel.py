@@ -13,11 +13,12 @@ from Lab1.Model.SudokuGridFactory.ISudokuGridFactory import ISudokuGridFactory
 class SudokuAppModel(ISudokuAppModel):
     solved_grid: numpy.array
     game_grid: numpy.array
-    solved_grid_factory: ISudokuGridFactory = GridFactory()
-    game_grid_factory: ISudokuGameGridFactory = SudokuGameGridFactory(30)
+    solved_grid_factory: ISudokuGridFactory
+    game_grid_factory: ISudokuGameGridFactory
 
     def __init__(self) -> None:
-        self.new_game()
+        self.solved_grid_factory = GridFactory()
+        self.game_grid_factory = SudokuGameGridFactory(30)
 
     def new_game(self) -> None:
         st = time.time()
