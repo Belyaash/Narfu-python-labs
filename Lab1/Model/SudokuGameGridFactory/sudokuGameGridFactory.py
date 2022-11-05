@@ -31,21 +31,18 @@ class SudokuGameGridFactory(ISudokuGameGridFactory):
         return self.__convert_num_matrix_to_cell_matrix(self.game_grid)
 
     def __create_order_of_deletion(self) -> None:
-        order = []
-        for i in range(81):
-            order.append(i)
-
+        order = list(range(81))
         random.shuffle(order)
         self.__order_of_deletion = numpy.array(order, dtype=int)
 
     def __create_game_matrix(self) -> None:
         self.game_grid = copy.deepcopy(self.__solved_grid)
         sudoku_solver: ISudokuSolver = SudokuSolver(self.game_grid)
-        for i in range(81):
+        for pos_of_deletion in self.__order_of_deletion:
             if self.__difficulty_of_game_grid >= self.difficulty + 2:
                 break
-            row = self.__order_of_deletion[i] // 9
-            col = self.__order_of_deletion[i] % 9
+            row = pos_of_deletion // 9
+            col = pos_of_deletion % 9
             temp = self.game_grid[row][col]
             self.game_grid[row][col] = 0
             self.__difficulty_of_game_grid += 1
