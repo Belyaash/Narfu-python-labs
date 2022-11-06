@@ -19,9 +19,9 @@ class SudokuSolver(ISudokuSolver):
         self.__grid = grid
 
     def get_solved_grid(self):
-        return self.sudoku_solver(self.__grid)
+        return self.__sudoku_solver(self.__grid)
 
-    def sudoku_solver(self, state: numpy.ndarray) -> numpy.ndarray:
+    def __sudoku_solver(self, state: numpy.ndarray) -> numpy.ndarray:
         """
         Solves the given sudoku, if there are empty cells.
         If there are no empty cells, an error grid is returned.
@@ -38,12 +38,12 @@ class SudokuSolver(ISudokuSolver):
         sudoku_state = SudokuState(state)
 
         # Solve sudoku, if it appears to be solvable
-        result = self.backtrack(sudoku_state) if sudoku_state.solvable else None
+        result = self.__backtrack(sudoku_state) if sudoku_state.solvable else None
 
         # Return result if valid
         return error if result is None else result.apply_solution()
 
-    def backtrack(self, state: SudokuState) -> SudokuState or None:
+    def __backtrack(self, state: SudokuState) -> SudokuState or None:
         """
         Solve sudoku using backtracking
         :param state: State to solve
@@ -68,7 +68,7 @@ class SudokuSolver(ISudokuSolver):
                 return state
 
             # Continue trying this RCV
-            deep_state = self. backtrack(state)
+            deep_state = self. __backtrack(state)
 
             # Was a solution found?
             if deep_state is not None:
@@ -93,24 +93,6 @@ class SudokuSolver(ISudokuSolver):
             if i != num:
                 grid = copy.deepcopy(self.__grid)
                 grid[row][col] = i
-                grid = self.sudoku_solver(grid)
+                grid = self.__sudoku_solver(grid)
                 if grid[0][0] != -1:
                     self.__solutions += 1
-
-    def __is_grid_filled(self):
-        """
-        A function to check if the grid is full
-        :return: bool
-        """
-        for row in range(0, 9):
-            for col in range(0, 9):
-                if self.__grid[row][col] == 0:
-                    return row, col
-
-    def __is_safe(self, grid, row, col, num) -> bool:
-        start_row = row - row % 3
-        start_col = col - col % 3
-        for i in range(9):
-            if (grid[row][i] == num) or (grid[i][col] == num) or (grid[i // 3 + start_row][i % 3 + start_col] == num):
-                return False
-        return True
