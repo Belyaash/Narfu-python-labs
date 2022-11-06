@@ -92,7 +92,17 @@ class SudokuSolver(ISudokuSolver):
                 return
             if i != num:
                 grid = copy.deepcopy(self.__grid)
-                grid[row][col] = i
-                grid = self.__sudoku_solver(grid)
-                if grid[0][0] != -1:
-                    self.__solutions += 1
+                if self.__is_safe(grid, row, col, i):
+                    grid[row][col] = i
+                    grid = self.__sudoku_solver(grid)
+                    if grid[0][0] != -1:
+                        self.__solutions += 1
+
+
+    def __is_safe(self, grid, row, col, num) -> bool:
+        start_row = row - row % 3
+        start_col = col - col % 3
+        for i in range(9):
+            if (grid[row][i] == num) or (grid[i][col] == num) or (grid[i // 3 + start_row][i % 3 + start_col] == num):
+                return False
+        return True
