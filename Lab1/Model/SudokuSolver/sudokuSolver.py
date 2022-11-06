@@ -79,29 +79,29 @@ class SudokuSolver(ISudokuSolver):
             # Remove RCV from solution and restore the matrix, so that we can try the next RCV
             state.remove_solution(rcv, removed)
 
-    def is_grid_have_only_one_solution(self, last_deleted_row, last_deleted_col, last_deleted_num) -> bool:
+    def is_grid_have_only_one_solution(self, row, col, num) -> bool:
         self.__solutions = 0
-        self.__count_solutions(last_deleted_row, last_deleted_col, last_deleted_num)
+        # print(self.__grid)
+        # print(self.__solutions)
+        self.__count_solutions(row, col, num)
         return self.__solutions == 0
 
-    def __count_solutions(self, last_deleted_row, last_deleted_col, last_deleted_num) -> None:
+    def __count_solutions(self, row, col, num) -> None:
         for i in range(1, 10):
-            if self.__solutions>0:
+            if self.__solutions > 0:
                 return
-            if i!=last_deleted_num:
+            if i != num:
                 grid = copy.deepcopy(self.__grid)
-                grid[last_deleted_row][last_deleted_col] = i
+                grid[row][col] = i
                 grid = self.sudoku_solver(grid)
                 if grid[0][0] != -1:
-                    self.__solutions +=1
+                    self.__solutions += 1
 
-
-    def __pos_of_unfilled_cell(self):
+    def __is_grid_filled(self):
         """
         A function to check if the grid is full
         :return: bool
         """
-
         for row in range(0, 9):
             for col in range(0, 9):
                 if self.__grid[row][col] == 0:

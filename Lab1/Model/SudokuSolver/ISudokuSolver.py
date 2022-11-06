@@ -8,5 +8,5 @@ class ISudokuSolver(object):
     def get_solved_grid(self):
         pass
 
-    def is_grid_have_only_one_solution(self, last_deleted_row, last_deleted_col, last_deleted_nu) -> bool:
+    def is_grid_have_only_one_solution(self, last_deleted_row, last_deleted_col, last_deleted_num) -> bool:
         pass
