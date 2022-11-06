@@ -79,42 +79,29 @@ class SudokuSolver(ISudokuSolver):
             # Remove RCV from solution and restore the matrix, so that we can try the next RCV
             state.remove_solution(rcv, removed)
 
-    def is_grid_have_only_one_solution(self) -> bool:
+    def is_grid_have_only_one_solution(self, last_deleted_row, last_deleted_col, last_deleted_num) -> bool:
         self.__solutions = 0
-        self.__solved_grid = numpy.zeros((9, 9), dtype=int)
-        self.__count_solutions()
-        self.__grid = self.__solved_grid
-        return self.__solutions == 1
+        self.__count_solutions(last_deleted_row, last_deleted_col, last_deleted_num)
+        return self.__solutions == 0
 
-    def __count_solutions(self) -> None:
-        fast_grid = self.sudoku_solver(copy.deepcopy(self.__grid))
-        if fast_grid[0][0] == -1:
-            return
-        if numpy.array_equal(fast_grid, self.__solved_grid) is False:
-            self.__solutions += 1
-            return
-        if self.__solved_grid[0][0] == 0:
-            self.__solved_grid = fast_grid
-            self.__solutions += 1
-
-        print(self.__grid)
-        print(self.__solutions)
-        a = self.__is_grid_filled()
-        row, col = self.__is_grid_filled()
-
+    def __count_solutions(self, last_deleted_row, last_deleted_col, last_deleted_num) -> None:
         for i in range(1, 10):
-            if self.__solutions > 1:
+            if self.__solutions>0:
                 return
-            if self.__is_safe(self.__grid, row, col, i):
-                self.__grid[row][col] = i
-                self.__count_solutions()
-            self.__grid[row][col] = 0
+            if i!=last_deleted_num:
+                grid = copy.deepcopy(self.__grid)
+                grid[last_deleted_row][last_deleted_col] = i
+                grid = self.sudoku_solver(grid)
+                if grid[0][0] != -1:
+                    self.__solutions +=1
 
-    def __is_grid_filled(self) :
+
+    def __pos_of_unfilled_cell(self):
         """
         A function to check if the grid is full
         :return: bool
         """
+
         for row in range(0, 9):
             for col in range(0, 9):
                 if self.__grid[row][col] == 0:

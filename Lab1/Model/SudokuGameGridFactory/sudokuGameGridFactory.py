@@ -46,7 +46,7 @@ class SudokuGameGridFactory(ISudokuGameGridFactory):
             temp = self.game_grid[row][col]
             self.game_grid[row][col] = 0
             self.__difficulty_of_game_grid += 1
-            if sudoku_solver.is_grid_have_only_one_solution() is False:
+            if sudoku_solver.is_grid_have_only_one_solution(row, col, temp) is False:
                 self.game_grid[row][col] = temp
                 self.__difficulty_of_game_grid -= 1
 
