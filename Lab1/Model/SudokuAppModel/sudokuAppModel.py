@@ -53,4 +53,4 @@ class SudokuAppModel(ISudokuAppModel):
         return True
 
     def set_difficulty(self, difficulty: int) -> None:
-        self.game_grid_factory.difficulty = difficulty*8 + 30
+        self.game_grid_factory.difficulty = difficulty*14 + 30

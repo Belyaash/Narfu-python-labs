@@ -1,3 +1,4 @@
+import numpy
 from PyQt5.QtGui import QFont
 from PyQt5.QtWidgets import QDialog, QGridLayout, QPushButton
 from PyQt5 import QtCore
@@ -41,3 +42,5 @@ class Digits(QDialog):
     def on_click_empty(self):
         self.num = '0'
         self.close()
+
+

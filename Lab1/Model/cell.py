@@ -1,6 +1,3 @@
-from typing import Set, Any
-
-
 class Cell:
     num = 0
     isActive = False
@@ -12,4 +9,3 @@ class Cell:
         else:
             self.num = 0
             self.isActive = True
-
