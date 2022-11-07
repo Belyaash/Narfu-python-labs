@@ -12,3 +12,6 @@ class ISudokuGameGridFactory:
 
     def create_game_grid(self, grid: numpy.array) -> numpy.array:
         pass
+
+    def set_length_of_block(self, length):
+        pass

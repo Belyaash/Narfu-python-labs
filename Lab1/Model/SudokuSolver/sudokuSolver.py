@@ -11,15 +11,20 @@ class SudokuSolver(ISudokuSolver):
     __row_of_unfilled_cell: int
     __col_of_unfilled_cell: int
     __solved_grid: numpy.array
+    __length_of_block: int
 
-    def __init__(self, solved_grid: numpy.array) -> None:
-        self.set_grid(solved_grid)
+    def __init__(self, grid_to_solve: numpy.array, length_of_block=3) -> None:
+        self.set_grid(grid_to_solve)
+        self.__length_of_block = length_of_block
 
     def set_grid(self, grid: numpy.array) -> None:
         self.__grid = grid
 
     def get_solved_grid(self):
         return self.__sudoku_solver(self.__grid)
+
+    def set_length_of_block(self, length):
+        self.__length_of_block = length
 
     def __sudoku_solver(self, state: numpy.ndarray) -> numpy.ndarray:
         """
@@ -29,13 +34,13 @@ class SudokuSolver(ISudokuSolver):
         :return: 9x9 solved sudoku grid, or error grid.
         """
         # Value to return if sudoku is unsolvable
-        error = numpy.full((9, 9), fill_value=-1)
+        error = numpy.full((self.__length_of_block**2, self.__length_of_block**2), fill_value=-1)
 
         if numpy.count_nonzero(state == 0) == 0:
             return error
 
         # Make SudokuState with received array
-        sudoku_state = SudokuState(state)
+        sudoku_state = SudokuState(state, self.__length_of_block)
 
         # Solve sudoku, if it appears to be solvable
         result = self.__backtrack(sudoku_state) if sudoku_state.solvable else None
@@ -81,13 +86,11 @@ class SudokuSolver(ISudokuSolver):
 
     def is_grid_have_only_one_solution(self, row, col, num) -> bool:
         self.__solutions = 0
-        # print(self.__grid)
-        # print(self.__solutions)
         self.__count_solutions(row, col, num)
         return self.__solutions == 0
 
     def __count_solutions(self, row, col, num) -> None:
-        for i in range(1, 10):
+        for i in range(1, self.__length_of_block**2):
             if self.__solutions > 0:
                 return
             if i != num:
@@ -98,11 +101,13 @@ class SudokuSolver(ISudokuSolver):
                     if grid[0][0] != -1:
                         self.__solutions += 1
 
-
     def __is_safe(self, grid, row, col, num) -> bool:
-        start_row = row - row % 3
-        start_col = col - col % 3
-        for i in range(9):
-            if (grid[row][i] == num) or (grid[i][col] == num) or (grid[i // 3 + start_row][i % 3 + start_col] == num):
+        start_row = row - row % self.__length_of_block
+        start_col = col - col % self.__length_of_block
+        for i in range(self.__length_of_block**2):
+            if (grid[row][i] == num) or (grid[i][col] == num) \
+                    or (grid[i // self.__length_of_block + start_row][i % self.__length_of_block + start_col] == num):
                 return False
         return True
+
+

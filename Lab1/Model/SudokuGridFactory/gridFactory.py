@@ -4,7 +4,7 @@ import time
 import numpy
 
 from Lab1.Model.SudokuGridFactory.ISudokuGridFactory import ISudokuGridFactory
-from Lab1.Model.SudokuSolver.ISudokuSolver import ISudokuSolver
+from Lab1.Model.SudokuSolver import ISudokuSolver
 from Lab1.Model.SudokuSolver.sudokuSolver import SudokuSolver
 
 
@@ -18,10 +18,13 @@ class GridFactory(ISudokuGridFactory):
 
     def create_new_grid(self) -> numpy.array:
         self.__create_clear_grid()
-        self.__fill_all_diagonal_boxes()
-        print(self.__temp_grid)
-        # ss: ISudokuSolver = SudokuSolver(self.__temp_grid)
-        # return ss.get_solved_grid()
+        self.__create_nums_list()
+        self.__fill_diagonal_box(0)
+        ss: ISudokuSolver = SudokuSolver(self.__temp_grid, self.__length_of_block)
+        return ss.get_solved_grid()
+
+    def set_length_of_block(self, length):
+        self.__length_of_block = length
 
     def __create_clear_grid(self):
         side = self.__length_of_block ** 2
@@ -43,7 +46,3 @@ class GridFactory(ISudokuGridFactory):
         for i in range(self.__length_of_block):
             for j in range(self.__length_of_block):
                 self.__temp_grid[start + i][start + j] = self.__nums_list[i * self.__length_of_block + j]
-
-
-gf = GridFactory(2)
-gf.create_new_grid()

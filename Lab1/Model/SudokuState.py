@@ -6,39 +6,19 @@ class SudokuState:
 
     # dict of constraints, RCV as keys
     get_constraints = {}
+    length_of_block: int
 
-    # Populate get_constraints
-    for r in range(9):
-        block_y = r // 3
-
-        for c in range(9):
-            block_x = c // 3
-            b = (block_y * 3) + block_x
-
-            for v in range(1, 10):
-                # Truncates r, c down to nearest multiple of 3
-                # Get block id
-                #   0 1 2
-                #   3 4 5
-                #   6 7 8
-
-                get_constraints[(r, c, v)] = [
-                    # Every cell must have a value, (x, y)
-                    ("Cell", (r, c)),
-                    # Every row must contain each value, (row, val)
-                    ("Row", (r, v)),
-                    # Every column must contain each value, (column, val)
-                    ("Col", (c, v)),
-                    # Every block must contain each value, (block, val)
-                    ("Block", (b, v))
-                ]
-
-    def __init__(self, values: np.ndarray):
+    def __init__(self, values: np.ndarray, length_of_block=3):
         """
         Create a new Sudoku State.
         Calculates matrix A from passed values
         :param values: 9x9 grid of initial state
         """
+        self.get_constraints.clear()
+        self.length_of_block = length_of_block
+        self.side = length_of_block**2
+        self.populate_get_constrains()
+
         self.solvable = True
         self.solution = {}
         self.values = values
@@ -46,17 +26,17 @@ class SudokuState:
         # matrix A
         self.a = {
             c: set() for c in (
-                    # Every cell must contain a value, (col, row)
-                    [("Cell", (x, y)) for x in range(9) for y in range(9)] +
+                # Every cell must contain a value, (col, row)
+                    [("Cell", (x, y)) for x in range(self.side) for y in range(self.side)] +
 
                     # Every row must contain each value, (row, val)
-                    [("Row", (row, val)) for row in range(9) for val in range(1, 10)] +
+                    [("Row", (row, val)) for row in range(self.side) for val in range(1, self.side+1)] +
 
                     # Every column must contain each value, (column, val)
-                    [("Col", (col, val)) for col in range(9) for val in range(1, 10)] +
+                    [("Col", (col, val)) for col in range(self.side) for val in range(1, self.side+1)] +
 
                     # Every block must contain each value, (block, val)
-                    [("Block", (blk, val)) for blk in range(9) for val in range(1, 10)]
+                    [("Block", (blk, val)) for blk in range(self.side) for val in range(1, self.side+1)]
             )
         }
 
@@ -72,6 +52,33 @@ class SudokuState:
                     self.remove_conflicting_rcvs((y, x, value))
                 except KeyError:
                     self.solvable = False
+
+    def populate_get_constrains(self):
+        # Populate get_constraints
+        for r in range(self.side):
+            block_y = r // self.length_of_block
+
+            for c in range(self.side):
+                block_x = c // self.length_of_block
+                b = (block_y * self.length_of_block) + block_x
+
+                for v in range(1, self.side+1):
+                    # Truncates r, c down to nearest multiple of 3
+                    # Get block id
+                    #   0 1 2
+                    #   3 4 5
+                    #   6 7 8
+
+                    self.get_constraints[(r, c, v)] = [
+                        # Every cell must have a value, (x, y)
+                        ("Cell", (r, c)),
+                        # Every row must contain each value, (row, val)
+                        ("Row", (r, v)),
+                        # Every column must contain each value, (column, val)
+                        ("Col", (c, v)),
+                        # Every block must contain each value, (block, val)
+                        ("Block", (b, v))
+                    ]
 
     def remove_conflicting_rcvs(self, rcv: (int, int, int)):
         """

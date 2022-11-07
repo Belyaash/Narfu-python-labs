@@ -11,7 +11,7 @@ class ISudokuAppModel:
     solved_grid_factory: ISudokuGridFactory
     game_grid_factory: ISudokuGameGridFactory
 
-    def __init__(self) -> None:
+    def __init__(self, length_of_block=3) -> None:
         pass
 
     def new_game(self) -> None:
@@ -35,5 +35,8 @@ class ISudokuAppModel:
     def is_game_grid_filled(self) -> bool:
         pass
 
-    def set_difficulty(self) -> None:
+    def set_difficulty(self, difficulty) -> None:
+        pass
+
+    def set_length_of_block(self, length):
         pass
