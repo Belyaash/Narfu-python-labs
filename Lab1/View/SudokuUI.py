@@ -98,6 +98,9 @@ class Ui_Form(object):
         self.solve_button.setGeometry(QtCore.QRect(540, 270, 120, 30))
         self.solve_button.setText("Solve")
 
+        self.condition = QtWidgets.QLabel(Form)
+        self.condition.setGeometry(QtCore.QRect(530, 400, 140, 30))
+
         font = QFont('Century', 14)
         self.cells = []
         positions = [(i, j) for i in range(9) for j in range(9)]

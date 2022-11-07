@@ -65,4 +65,4 @@ class SudokuAppModel(ISudokuAppModel):
 
     def set_difficulty(self, level: int) -> None:
         self.level = level
-        self.game_grid_factory.difficulty = self.length_of_block**4 // (2.3 - 0.45*level)
+        self.game_grid_factory.difficulty = self.length_of_block**4 // (2.3 - 0.4*level)

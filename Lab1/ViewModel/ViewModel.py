@@ -1,3 +1,5 @@
+import time
+
 from PyQt5 import QtWidgets, QtCore
 
 from Lab1.View.SelectDifficultyUI import SelectDifficulty
@@ -38,6 +40,7 @@ class ViewModel(Ui_Form, QtWidgets.QMainWindow):
         self.__refresh_grid()
         self.__refresh_game_menu()
         self.__set_button_style_and_text()
+        self.start_dialog_if_grid_full()
 
     def select_difficulty_dialog(self):
         self.close()
@@ -126,9 +129,17 @@ class ViewModel(Ui_Form, QtWidgets.QMainWindow):
         """
         if self.model.is_game_grid_filled():
             if self.model.is_player_win():
-                self.__win_dialog()
+                self.condition.setText("Sudoku is filled correctly")
+                self.condition.setStyleSheet("QLabel { background-color : green; color : blue; }")
+                self.__const_cells = list(range(81))
+                self.timer.stop()
+                self.__try_update_best_time()
             else:
-                self.__fail_dialog()
+                self.condition.setText("  You have some errors")
+                self.condition.setStyleSheet("QLabel { background-color : red; color : blue; }")
+        else:
+            self.condition.setText(" ")
+            self.condition.setStyleSheet("QLabel { background-color : #f0f0f0; color : blue; }")
 
     def __win_dialog(self):
         """
@@ -140,8 +151,7 @@ class ViewModel(Ui_Form, QtWidgets.QMainWindow):
         win_dialog.setWindowTitle("Win")
         win_dialog.setIcon(QtWidgets.QMessageBox.Information)
         win_dialog.setStandardButtons(QtWidgets.QMessageBox.Ok)
-        self.timer.stop()
-        self.__try_update_best_time()
+
         win_dialog.exec_()
 
 
@@ -198,4 +208,4 @@ class ViewModel(Ui_Form, QtWidgets.QMainWindow):
             self.model.set_cell_num(i // 9, i % 9, correct_num)
             button = self.cells[i]
             button.setText(str(correct_num))
-        self.__win_dialog()
+        self.start_dialog_if_grid_full()
