@@ -16,17 +16,20 @@ class ViewModel(Ui_Form, QtWidgets.QMainWindow):
     model: ISudokuAppModel = None
     timer: QtCore.QTimer = QtCore.QTimer()
     saver: Saver = Saver()
+    length_of_block: int
 
     def __init__(self, parent=None):
         super(Ui_Form, self).__init__(parent)
         self.setupUi(self)
+        self.length_of_block = 3
         self.timer.timeout.connect(self.timer_tick)
         self.timer.start(1000)
         self.newGameButton.clicked.connect(self.new_game)
         self.solve_button.clicked.connect(self.solve)
+        self.size_cb.setCurrentText("3*3")
+        self.size_cb.currentTextChanged.connect(self.set_size)
         self.difficulty_combo_box.currentTextChanged.connect(self.set_difficulty)
-        for button in self.cells:
-            button.clicked.connect(self.__cell_clicked)
+
 
     def set_model(self, model: ISudokuAppModel):
         self.model = model
@@ -36,6 +39,9 @@ class ViewModel(Ui_Form, QtWidgets.QMainWindow):
         Create new game grid
         :return:
         """
+        self.createGrid(self, self.length_of_block)
+        for button in self.cells:
+            button.clicked.connect(self.__cell_clicked)
         self.model.new_game()
         self.__refresh_grid()
         self.__refresh_game_menu()
@@ -49,20 +55,25 @@ class ViewModel(Ui_Form, QtWidgets.QMainWindow):
         self.difficulty_combo_box.setCurrentText(select_diff.difficulty_name)
         if self.difficulty_combo_box.currentText() == "Easy":
             self.new_game()
+        self.size_cb.setCurrentText(select_diff.length_name)
+        if self.difficulty_combo_box.currentText() == "3*3":
+            self.new_game()
         self.show()
 
     def __refresh_game_menu(self):
         self.timer.stop()
         self.__seconds = 0
-        self.best_game_time.setText(self.saver.get_data(self.difficulty_combo_box.currentText()))
+        str_to_saver = self.difficulty_combo_box.currentText()+self.size_cb.currentText()
+        self.best_game_time.setText(self.saver.get_data(str_to_saver))
         self.current_game_time.setText("00:00:00")
         self.timer.start()
 
     def __refresh_grid(self):
         self.__cells_value = []
         self.__const_cells = []
-        for i in range(9):
-            for j in range(9):
+        side = self.length_of_block**2
+        for i in range(side):
+            for j in range(side):
                 self.__cells_value.append(self.model.get_game_grid_cell_num(i, j))
                 self.__const_cells.append(self.model.get_game_grid_cell_is_const(i, j))
 
@@ -104,7 +115,8 @@ class ViewModel(Ui_Form, QtWidgets.QMainWindow):
         if not digit:
             return
 
-        self.model.set_cell_num(index // 9, index % 9, int(digit))
+        side = self.length_of_block**2
+        self.model.set_cell_num(index // side, index % side, int(digit))
 
         if digit == "0":
             digit = " "
@@ -112,13 +124,12 @@ class ViewModel(Ui_Form, QtWidgets.QMainWindow):
         button.setText(digit)
         self.start_dialog_if_grid_full()
 
-    @staticmethod
-    def __get_user_digit():
+    def __get_user_digit(self):
         """
         Open window for a digit choose
         :return:
         """
-        window = Digits()
+        window = Digits(self.length_of_block)
         window.exec()
         return window.num
 
@@ -131,7 +142,7 @@ class ViewModel(Ui_Form, QtWidgets.QMainWindow):
             if self.model.is_player_win():
                 self.condition.setText("Sudoku is filled correctly")
                 self.condition.setStyleSheet("QLabel { background-color : green; color : blue; }")
-                self.__const_cells = list(range(81))
+                self.__const_cells = list(range(self.length_of_block**4))
                 self.timer.stop()
                 self.__try_update_best_time()
             else:
@@ -141,32 +152,6 @@ class ViewModel(Ui_Form, QtWidgets.QMainWindow):
             self.condition.setText(" ")
             self.condition.setStyleSheet("QLabel { background-color : #f0f0f0; color : blue; }")
 
-    def __win_dialog(self):
-        """
-        Win dialog
-        :return:
-        """
-        win_dialog = QtWidgets.QMessageBox()
-        win_dialog.setText("SudokuMVC is filled correctly/ Победа")
-        win_dialog.setWindowTitle("Win")
-        win_dialog.setIcon(QtWidgets.QMessageBox.Information)
-        win_dialog.setStandardButtons(QtWidgets.QMessageBox.Ok)
-
-        win_dialog.exec_()
-
-
-    def __fail_dialog(self):
-        """
-        Lose dialog
-        :return:
-        """
-        error_dialog = QtWidgets.QMessageBox()
-        error_dialog.setText("SudokuMVC is filled in incorrectly / Решение неверно")
-        error_dialog.setWindowTitle("Fail")
-        error_dialog.setIcon(QtWidgets.QMessageBox.Warning)
-        error_dialog.setStandardButtons(QtWidgets.QMessageBox.Ok)
-        error_dialog.exec_()
-
     def set_difficulty(self, s):
         if s == "Easy":
             self.model.set_difficulty(0)
@@ -175,6 +160,16 @@ class ViewModel(Ui_Form, QtWidgets.QMainWindow):
         if s == "Hard":
             self.model.set_difficulty(2)
         self.new_game()
+
+    def set_size(self,s):
+        if s == "2*2":
+            self.length_of_block = 2
+        if s == "3*3":
+            self.length_of_block = 3
+        self.model.set_length_of_block(self.length_of_block)
+        self.new_game()
+
+
 
     def timer_tick(self):
         self.__seconds += 1
@@ -197,15 +192,19 @@ class ViewModel(Ui_Form, QtWidgets.QMainWindow):
             return str(time)
 
     def __try_update_best_time(self):
-        best_time = self.saver.get_data(self.difficulty_combo_box.currentText()).split(':')
+        str_to_saver = self.difficulty_combo_box.currentText() + self.size_cb.currentText()
+        best_time = self.saver.get_data(str_to_saver).split(':')
         best_time_seconds = int(best_time[0])*3600 + int(best_time[1])*60 + int(best_time[2])
         if (self.__seconds < best_time_seconds) or (best_time_seconds == 0):
-            self.saver.save_data(self.difficulty_combo_box.currentText(), self.get_time())
+            str_to_saver = self.difficulty_combo_box.currentText() + self.size_cb.currentText()
+            self.saver.save_data(str_to_saver, self.get_time())
+            self.best_game_time.setText(self.current_game_time.text())
 
     def solve(self):
-        for i in range(81):
-            correct_num = self.model.get_solved_grid_cell(i//9, i%9)
-            self.model.set_cell_num(i // 9, i % 9, correct_num)
+        side = self.length_of_block**2
+        for i in range(side**2):
+            correct_num = self.model.get_solved_grid_cell(i//side, i%side)
+            self.model.set_cell_num(i // side, i % side, correct_num)
             button = self.cells[i]
             button.setText(str(correct_num))
         self.start_dialog_if_grid_full()

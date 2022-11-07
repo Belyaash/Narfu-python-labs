@@ -18,48 +18,7 @@ class Ui_Form(object):
         Form.setObjectName("Form")
         Form.setWindowModality(QtCore.Qt.NonModal)
         Form.resize(700, 500)
-        self.line = QtWidgets.QFrame(Form)
-        self.line.setGeometry(QtCore.QRect(15, 15, 470, 3))
-        self.line.setAutoFillBackground(False)
-        self.line.setFrameShape(QtWidgets.QFrame.HLine)
-        self.line.setFrameShadow(QtWidgets.QFrame.Sunken)
-        self.line.setObjectName("line")
-        self.line_2 = QtWidgets.QFrame(Form)
-        self.line_2.setGeometry(QtCore.QRect(15, 172, 470, 3))
-        self.line_2.setFrameShape(QtWidgets.QFrame.HLine)
-        self.line_2.setFrameShadow(QtWidgets.QFrame.Sunken)
-        self.line_2.setObjectName("line_2")
-        self.line_3 = QtWidgets.QFrame(Form)
-        self.line_3.setGeometry(QtCore.QRect(15, 327, 470, 3))
-        self.line_3.setBaseSize(QtCore.QSize(2, 0))
-        self.line_3.setFrameShape(QtWidgets.QFrame.HLine)
-        self.line_3.setFrameShadow(QtWidgets.QFrame.Sunken)
-        self.line_3.setObjectName("line_3")
-        self.line_4 = QtWidgets.QFrame(Form)
-        self.line_4.setGeometry(QtCore.QRect(15, 485, 470, 3))
-        self.line_4.setFrameShape(QtWidgets.QFrame.HLine)
-        self.line_4.setFrameShadow(QtWidgets.QFrame.Sunken)
-        self.line_4.setObjectName("line_4")
-        self.line_5 = QtWidgets.QFrame(Form)
-        self.line_5.setGeometry(QtCore.QRect(15, 15, 3, 470))
-        self.line_5.setFrameShape(QtWidgets.QFrame.VLine)
-        self.line_5.setFrameShadow(QtWidgets.QFrame.Sunken)
-        self.line_5.setObjectName("line_5")
-        self.line_6 = QtWidgets.QFrame(Form)
-        self.line_6.setGeometry(QtCore.QRect(172, 15, 3, 470))
-        self.line_6.setFrameShape(QtWidgets.QFrame.VLine)
-        self.line_6.setFrameShadow(QtWidgets.QFrame.Sunken)
-        self.line_6.setObjectName("line_6")
-        self.line_7 = QtWidgets.QFrame(Form)
-        self.line_7.setGeometry(QtCore.QRect(328, 15, 3, 470))
-        self.line_7.setFrameShape(QtWidgets.QFrame.VLine)
-        self.line_7.setFrameShadow(QtWidgets.QFrame.Sunken)
-        self.line_7.setObjectName("line_7")
-        self.line_8 = QtWidgets.QFrame(Form)
-        self.line_8.setGeometry(QtCore.QRect(485, 15, 3, 470))
-        self.line_8.setFrameShape(QtWidgets.QFrame.VLine)
-        self.line_8.setFrameShadow(QtWidgets.QFrame.Sunken)
-        self.line_8.setObjectName("line_8")
+
         self.newGameButton = QtWidgets.QPushButton(Form)
         self.newGameButton.setGeometry(QtCore.QRect(540, 15, 120, 30))
         self.newGameButton.setObjectName("newGameButton")
@@ -75,27 +34,35 @@ class Ui_Form(object):
         self.difficulty_label.setText("Select difficulty")
 
         self.difficulty_combo_box = QtWidgets.QComboBox(Form)
-        self.difficulty_combo_box.setGeometry(QtCore.QRect(540, 100, 120, 30))
+        self.difficulty_combo_box.setGeometry(QtCore.QRect(540, 90, 120, 30))
         self.difficulty_combo_box.addItems(["Easy", "Medium", "Hard"])
 
+        self.size_label = QtWidgets.QLabel(Form)
+        self.size_label.setGeometry(QtCore.QRect(540, 120, 120, 30))
+        self.size_label.setText("Select block")
+
+        self.size_cb = QtWidgets.QComboBox(Form)
+        self.size_cb.setGeometry(QtCore.QRect(540, 150, 120, 30))
+        self.size_cb.addItems(["2*2", "3*3"])
+
         self.current_time_label = QtWidgets.QLabel(Form)
-        self.current_time_label.setGeometry(QtCore.QRect(540, 150, 120, 30))
+        self.current_time_label.setGeometry(QtCore.QRect(540, 200, 120, 30))
         self.current_time_label.setText("Current time")
 
         self.current_game_time = QtWidgets.QLabel(Form)
-        self.current_game_time.setGeometry(QtCore.QRect(540, 170, 120, 30))
+        self.current_game_time.setGeometry(QtCore.QRect(540, 220, 120, 30))
         self.current_game_time.setText("00:00:00")
 
         self.best_time_label = QtWidgets.QLabel(Form)
-        self.best_time_label.setGeometry(QtCore.QRect(540, 230, 120, 30))
+        self.best_time_label.setGeometry(QtCore.QRect(540, 280, 120, 30))
         self.best_time_label.setText("Best time")
 
         self.best_game_time = QtWidgets.QLabel(Form)
-        self.best_game_time.setGeometry(QtCore.QRect(540, 250, 120, 30))
+        self.best_game_time.setGeometry(QtCore.QRect(540, 300, 120, 30))
         self.best_game_time.setText("00:00:00")
 
         self.solve_button = QtWidgets.QPushButton(Form)
-        self.solve_button.setGeometry(QtCore.QRect(540, 270, 120, 30))
+        self.solve_button.setGeometry(QtCore.QRect(540, 350, 120, 30))
         self.solve_button.setText("Solve")
 
         self.condition = QtWidgets.QLabel(Form)
@@ -103,14 +70,8 @@ class Ui_Form(object):
 
         font = QFont('Century', 14)
         self.cells = []
-        positions = [(i, j) for i in range(9) for j in range(9)]
-        for position in positions:
-            btn = QPushButton()
-            btn.setMaximumSize(QtCore.QSize(50, 50))
-            btn.setFont(font)
-            self.gridLayout.addWidget(btn, *position)
-            self.cells.append(btn)
-
+        self.lines = []
+        self.createGrid(Form)
         self.retranslateUi(Form)
         QtCore.QMetaObject.connectSlotsByName(Form)
 
@@ -118,3 +79,33 @@ class Ui_Form(object):
         _translate = QtCore.QCoreApplication.translate
         Form.setWindowTitle(_translate("Form", "SudokuMVC"))
         self.newGameButton.setText(_translate("Form", "Start New Game"))
+
+    def createGrid(self, Form, num_of_blocks_in_line=3):
+        for line in self.lines:
+            line.close()
+        for cell in self.cells:
+            cell.close()
+        self.cells.clear()
+        self.lines = []
+        for i in range(num_of_blocks_in_line+1):
+            line = QtWidgets.QFrame(Form)
+            line.setGeometry(QtCore.QRect(15, 15 + i * (470//num_of_blocks_in_line),470, 3))
+            line.setFrameShape(QtWidgets.QFrame.HLine)
+            line.setFrameShadow(QtWidgets.QFrame.Sunken)
+            self.lines.append(line)
+            line.show()
+            line = QtWidgets.QFrame(Form)
+            line.setGeometry(QtCore.QRect(15 + i * (470 // num_of_blocks_in_line), 15, 3, 470))
+            line.setFrameShape(QtWidgets.QFrame.VLine)
+            line.setFrameShadow(QtWidgets.QFrame.Sunken)
+            line.show()
+            self.lines.append(line)
+        font = QFont('Century', 14)
+        full_side = num_of_blocks_in_line**2
+        positions = [(i, j) for i in range(full_side) for j in range(full_side)]
+        for position in positions:
+            btn = QPushButton()
+            btn.setMaximumSize(QtCore.QSize(450//full_side, 450//full_side))
+            btn.setFont(font)
+            self.gridLayout.addWidget(btn, *position)
+            self.cells.append(btn)

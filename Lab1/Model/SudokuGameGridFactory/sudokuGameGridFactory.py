@@ -45,7 +45,7 @@ class SudokuGameGridFactory(ISudokuGameGridFactory):
         self.game_grid = copy.deepcopy(self.__solved_grid)
         sudoku_solver: ISudokuSolver = SudokuSolver(self.game_grid, self.length_of_block)
         for pos_of_deletion in self.__order_of_deletion:
-            if self.__difficulty_of_game_grid >= self.difficulty :
+            if self.__difficulty_of_game_grid >= self.difficulty + 1:
                 break
             row = pos_of_deletion // self.length_of_block ** 2
             col = pos_of_deletion % self.length_of_block ** 2
