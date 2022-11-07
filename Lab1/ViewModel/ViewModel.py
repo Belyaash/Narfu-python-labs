@@ -92,7 +92,7 @@ class ViewModel(Ui_Form, QtWidgets.QMainWindow):
                 button.setText(str(self.__cells_value[i]))
             else:
                 style = """
-                           QPushButton { background-color: white; }
+                           QPushButton { background-color: white; border: 1px solid gray}
                            QPushButton:hover { border: 2px solid blue; }
                         """
                 button.setText("")
