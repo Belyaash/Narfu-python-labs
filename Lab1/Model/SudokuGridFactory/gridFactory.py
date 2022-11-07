@@ -11,28 +11,39 @@ from Lab1.Model.SudokuSolver.sudokuSolver import SudokuSolver
 class GridFactory(ISudokuGridFactory):
     __temp_grid: numpy.array
     __nums_list: numpy.array
+    __length_of_block: int
+
+    def __init__(self, length_of_block=3):
+        self.__length_of_block = length_of_block
 
     def create_new_grid(self) -> numpy.array:
         self.__create_clear_grid()
         self.__fill_all_diagonal_boxes()
-        ss: ISudokuSolver = SudokuSolver(self.__temp_grid)
-        return ss.get_solved_grid()
+        print(self.__temp_grid)
+        # ss: ISudokuSolver = SudokuSolver(self.__temp_grid)
+        # return ss.get_solved_grid()
 
     def __create_clear_grid(self):
-        self.__temp_grid = numpy.zeros((9, 9), dtype=int)
+        side = self.__length_of_block ** 2
+        self.__temp_grid = numpy.zeros((side, side), dtype=int)
 
     def __create_nums_list(self):
-        one_to_nine = [1, 2, 3, 4, 5, 6, 7, 8, 9]
-        random.shuffle(one_to_nine)
-        self.__nums_list = numpy.array(one_to_nine, dtype=int)
+        nums = list(range(self.__length_of_block ** 2 + 1))
+        nums.remove(0)
+        random.shuffle(nums)
+        self.__nums_list = numpy.array(nums, dtype=int)
 
     def __fill_all_diagonal_boxes(self):
-        for i in range(3):
+        for i in range(self.__length_of_block):
             self.__create_nums_list()
             self.__fill_diagonal_box(i)
 
     def __fill_diagonal_box(self, index: int):
-        start = index * 3
-        for i in range(3):
-            for j in range(3):
-                self.__temp_grid[start + i][start + j] = self.__nums_list[i * 3 + j]
+        start = index * self.__length_of_block
+        for i in range(self.__length_of_block):
+            for j in range(self.__length_of_block):
+                self.__temp_grid[start + i][start + j] = self.__nums_list[i * self.__length_of_block + j]
+
+
+gf = GridFactory(2)
+gf.create_new_grid()

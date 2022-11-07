@@ -2,6 +2,8 @@ import numpy as np
 
 
 class SudokuState:
+    # This class used from https://github.com/ouked/sudoku_solver
+
     # dict of constraints, RCV as keys
     get_constraints = {}
 
