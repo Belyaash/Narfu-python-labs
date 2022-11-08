@@ -13,7 +13,7 @@ class Ui_Form(object):
         self.newGameButton.setGeometry(QtCore.QRect(540, 15, 120, 30))
         self.newGameButton.setObjectName("newGameButton")
         self.gridLayoutWidget = QtWidgets.QWidget(Form)
-        self.gridLayoutWidget.setGeometry(QtCore.QRect(20, 20, 460, 460))
+        self.gridLayoutWidget.setGeometry(QtCore.QRect(20, 20, 462, 462))
         self.gridLayoutWidget.setObjectName("gridLayoutWidget")
         self.gridLayout = QtWidgets.QGridLayout(self.gridLayoutWidget)
         self.gridLayout.setContentsMargins(0, 0, 0, 0)
@@ -95,7 +95,8 @@ class Ui_Form(object):
         positions = [(i, j) for i in range(full_side) for j in range(full_side)]
         for position in positions:
             btn = QPushButton()
-            btn.setMaximumSize(QtCore.QSize(450//full_side, 450//full_side))
+            btn.setFixedSize(QtCore.QSize(400//full_side, 400//full_side))
+            # btn.setMinimumSize(QtCore.QSize(450//full_side, 450//full_side))
             btn.setFont(font)
             self.gridLayout.addWidget(btn, *position)
             self.cells.append(btn)
