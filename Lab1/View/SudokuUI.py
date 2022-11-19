@@ -12,9 +12,11 @@ class Ui_Form(object):
         self.newGameButton = QtWidgets.QPushButton(Form)
         self.newGameButton.setGeometry(QtCore.QRect(540, 15, 120, 30))
         self.newGameButton.setObjectName("newGameButton")
+
         self.gridLayoutWidget = QtWidgets.QWidget(Form)
         self.gridLayoutWidget.setGeometry(QtCore.QRect(20, 20, 462, 462))
         self.gridLayoutWidget.setObjectName("gridLayoutWidget")
+
         self.gridLayout = QtWidgets.QGridLayout(self.gridLayoutWidget)
         self.gridLayout.setContentsMargins(0, 0, 0, 0)
         self.gridLayout.setObjectName("gridLayout")

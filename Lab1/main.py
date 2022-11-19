@@ -1,6 +1,6 @@
 import sys
 
-from ViewModel.app import App
+from Lab1.app import App
 
 if __name__ == '__main__':
     app = App(sys.argv)

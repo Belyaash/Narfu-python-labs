@@ -5,14 +5,18 @@ from PyQt5 import QtCore
 
 
 class Digits(QDialog):
+
     def __init__(self, length_of_block=3):
         super().__init__()
         self.num = None
         self.setWindowTitle('Select a num')
-        self.__digits = []
-        for i in range(length_of_block**2):
-            self.__digits.append(str(i+1))
+        self.init_list_of_nums(length_of_block)
         self.init_ui(length_of_block)
+
+    def init_list_of_nums(self, length_of_block):
+        self.__digits = []
+        for i in range(length_of_block ** 2):
+            self.__digits.append(str(i + 1))
 
     def init_ui(self, length_of_block=3):
         main_layout = QGridLayout()
@@ -31,7 +35,7 @@ class Digits(QDialog):
         empty_button.setText("Empty")
         empty_button.setFont(font)
         empty_button.clicked.connect(self.on_click_empty)
-        # empty_button.setMaximumSize(QtCore.QSize(140, 40))
+
         main_layout.addWidget(empty_button, length_of_block, 0, length_of_block, 0)
 
         self.setLayout(main_layout)
